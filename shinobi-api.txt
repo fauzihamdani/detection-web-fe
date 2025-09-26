@@ -1,0 +1,5 @@
+http://10.1.1.62/E4fVtLnzaS6ORGsHse5G5ZR9GQ71Bd/monitor/Bfnflagm7a
+
+
+http://10.1.1.62:8080/ZUlnPKoP8phiPjuR7xpOTH6NKwxD37/monitor/Bfnflagm7a
+http://10.1.1.62:8080/ZUlnPKoP8phiPjuR7xpOTH6NKwxD37/mjpeg/Bfnflagm7a/cam180
