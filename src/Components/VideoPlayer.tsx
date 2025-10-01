@@ -32,7 +32,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
       <img
         ref={imgRef}
         alt="Video stream"
-        width="640" // Adjust as necessary
+        style={{ width: "100%", border: "1px solid black" }}
+        // width="" // Adjust as necessary
         height="360"
         onLoad={handleImageLoading}
       />

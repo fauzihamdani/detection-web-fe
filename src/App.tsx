@@ -5,6 +5,7 @@ import UserLayout from "./layout/Layout";
 import NotFound from "./pages/NotFound";
 import VideosDashboard from "./pages/VideosDashboard";
 import ScanOnvif from "./pages/ScanOnvif";
+import Records from "./pages/Records";
 
 // http://10.1.1.62:5000/
 
@@ -37,6 +38,14 @@ function App() {
           element={
             <UserLayout>
               <ScanOnvif />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/records"
+          element={
+            <UserLayout>
+              <Records />
             </UserLayout>
           }
         />

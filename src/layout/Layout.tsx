@@ -4,6 +4,7 @@ import {
   FileAddFilled,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  ProfileOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
@@ -26,6 +27,12 @@ const userItemMenu = [
     key: 2,
     icon: React.createElement(FileAddFilled),
     label: <Link to={"/scan-onvif"}>Scan Onvif</Link>,
+    link: "/scan-onvif",
+  },
+  {
+    key: 3,
+    icon: React.createElement(ProfileOutlined),
+    label: <Link to={"/records"}>Records</Link>,
     link: "/scan-onvif",
   },
 ];
