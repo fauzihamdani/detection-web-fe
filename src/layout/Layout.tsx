@@ -1,26 +1,56 @@
-import React, { Children, useState } from "react";
+import React, { useState } from "react";
 import {
+  CameraOutlined,
+  FileAddFilled,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, theme, type MenuProps } from "antd";
+import { Link, useLocation } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 
+// const items : MenuProps["items"]=
+
+const userItemMenu = [
+  {
+    key: 1,
+    icon: React.createElement(CameraOutlined),
+    label: <Link to={"/"}>Cameras</Link>,
+    link: "/",
+  },
+  {
+    key: 2,
+    icon: React.createElement(FileAddFilled),
+    label: <Link to={"/scan-onvif"}>Scan Onvif</Link>,
+    link: "/scan-onvif",
+  },
+];
+
 const UserLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const nextIndexString = userItemMenu.findIndex(
+    (item) => item.link === location.pathname
+  );
 
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <Menu
+          theme="dark"
+          mode="inline"
+          items={userItemMenu}
+          selectedKeys={[String(nextIndexString + 1)]}
+        />
+        {/* <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
@@ -33,7 +63,7 @@ const UserLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             {
               key: "2",
               icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              label: "Onvif Scanner",
             },
             {
               key: "3",
@@ -41,7 +71,7 @@ const UserLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               label: "nav 3",
             },
           ]}
-        />
+        /> */}
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
