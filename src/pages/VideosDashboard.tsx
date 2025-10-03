@@ -14,9 +14,11 @@ const VideosDashboard = () => {
   const [valPan, setValPan] = useState<number>(0);
   const [loadingPan, setLoadingPan] = useState<boolean>(false);
   const [record, setRecord] = useState<boolean>(false);
+  const [loadingRecord, setLoadingRecord] = useState<boolean>(false);
 
   const handleRecord = async () => {
     try {
+      setLoadingRecord(true);
       if (record === true) {
         await fetch(
           "http://127.0.0.1:5002/stop-recording" /* "http://10.1.1.62:500/move" */,
@@ -43,6 +45,7 @@ const VideosDashboard = () => {
     } catch (error) {
       console.log(error);
     } finally {
+      setLoadingRecord(false);
       setRecord(!record);
     }
   };
@@ -172,8 +175,8 @@ const VideosDashboard = () => {
 
           <div>
             <Button
-              loading={loadingPan}
-              disabled={loadingPan}
+              loading={loadingRecord}
+              disabled={loadingRecord}
               onClick={handleRecord}
             >
               {record ? "Stop Recording" : "Record"}

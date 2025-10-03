@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import VideosDashboard from "./pages/VideosDashboard";
 import ScanOnvif from "./pages/ScanOnvif";
 import Records from "./pages/Records";
+import AddCamera from "./pages/AddCamera";
 
 // http://10.1.1.62:5000/
 
@@ -46,6 +47,14 @@ function App() {
           element={
             <UserLayout>
               <Records />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/add-camera"
+          element={
+            <UserLayout>
+              <AddCamera />
             </UserLayout>
           }
         />

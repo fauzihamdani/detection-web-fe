@@ -33,7 +33,13 @@ const userItemMenu = [
     key: 3,
     icon: React.createElement(ProfileOutlined),
     label: <Link to={"/records"}>Records</Link>,
-    link: "/scan-onvif",
+    link: "/records",
+  },
+  {
+    key: 4,
+    icon: React.createElement(ProfileOutlined),
+    label: <Link to={"/add-camera"}>Add Camera</Link>,
+    link: "/add-camera",
   },
 ];
 
