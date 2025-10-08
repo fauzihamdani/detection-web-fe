@@ -8,6 +8,7 @@ import ScanOnvif from "./pages/ScanOnvif";
 import Records from "./pages/Records";
 import AddCamera from "./pages/AddCamera";
 import WebRtc from "./pages/WebRtc";
+import Detections from "./pages/Detections";
 
 // http://10.1.1.62:5000/
 
@@ -64,6 +65,14 @@ function App() {
           element={
             <UserLayout>
               <WebRtc />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/detections"
+          element={
+            <UserLayout>
+              <Detections />
             </UserLayout>
           }
         />

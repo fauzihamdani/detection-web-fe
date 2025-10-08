@@ -79,45 +79,19 @@ const VideosDashboard = () => {
     <>
       <div style={{ height: "360px" }}>
         <Row gutter={16}>
-          <Col span={12}>
-            <VideoPlayer url=" http://127.0.0.1:5002/stream/0" uniqueId={1} />
+          <Col span={12} style={{ marginBottom: "2vh" }}>
+            <VideoPlayer url="http://127.0.0.1:5002/stream/0" uniqueId={1} />
           </Col>
-          <Col span={12}>
-            <VideoPlayer url=" http://127.0.0.1:5002/stream/1" uniqueId={2} />
+          <Col span={12} style={{ marginBottom: "2vh" }}>
+            <VideoPlayer url="http://127.0.0.1:5002/stream/1" uniqueId={2} />
           </Col>
-          <Col span={12}>
-            <VideoPlayer url=" http://127.0.0.1:5002/stream/2" uniqueId={3} />
+          <Col span={12} style={{ marginBottom: "2vh" }}>
+            <VideoPlayer url="http://127.0.0.1:5002/stream/2" uniqueId={3} />
+          </Col>
+          <Col span={12} style={{ marginBottom: "2vh" }}>
+            <VideoPlayer url="http://127.0.0.1:5002/stream/3" uniqueId={4} />
           </Col>
         </Row>
-
-        <Flex justify="space-evenly" gap={"10px"} style={{ height: "100%" }}>
-          <div style={{ height: "360px" }}>
-            {" "}
-            {/* <VideoPlayer
-              url="http://10.1.1.62:5001/obj-detection"
-              uniqueId={1}
-            /> */}
-            <VideoPlayer url=" http://127.0.0.1:5002/stream/0" uniqueId={1} />
-          </div>
-          <div style={{ height: "360px" }}>
-            {" "}
-            {/* <VideoPlayer
-              url="http://10.1.1.62:5001/obj-detection"
-              uniqueId={2}
-            /> */}
-            <VideoPlayer url=" http://127.0.0.1:5002/stream/1" uniqueId={2} />
-          </div>
-
-          <div style={{ height: "360px" }}>
-            {" "}
-            {/* <VideoPlayer
-              url="http://10.1.1.62:5001/obj-detection"
-              uniqueId={2}
-            /> */}
-            <VideoPlayer url=" http://127.0.0.1:5002/stream/2" uniqueId={3} />
-          </div>
-          {/* http://10.1.1.62:5001/obj-detection */}
-        </Flex>
       </div>
 
       {/* <VideoPlayer url="http://10.1.1.62:5001" /> */}

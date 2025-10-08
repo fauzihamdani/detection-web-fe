@@ -25,18 +25,24 @@ const userItemMenu = [
   },
   {
     key: 2,
+    icon: React.createElement(ProfileOutlined),
+    label: <Link to={"/detections"}>Detections</Link>,
+    link: "/detections",
+  },
+  {
+    key: 3,
     icon: React.createElement(FileAddFilled),
     label: <Link to={"/scan-onvif"}>Scan Onvif</Link>,
     link: "/scan-onvif",
   },
   {
-    key: 3,
+    key: 4,
     icon: React.createElement(ProfileOutlined),
     label: <Link to={"/records"}>Records</Link>,
     link: "/records",
   },
   {
-    key: 4,
+    key: 5,
     icon: React.createElement(ProfileOutlined),
     label: <Link to={"/add-camera"}>Add Camera</Link>,
     link: "/add-camera",
