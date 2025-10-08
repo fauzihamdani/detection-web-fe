@@ -7,6 +7,7 @@ import VideosDashboard from "./pages/VideosDashboard";
 import ScanOnvif from "./pages/ScanOnvif";
 import Records from "./pages/Records";
 import AddCamera from "./pages/AddCamera";
+import WebRtc from "./pages/WebRtc";
 
 // http://10.1.1.62:5000/
 
@@ -55,6 +56,14 @@ function App() {
           element={
             <UserLayout>
               <AddCamera />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/web-rtc"
+          element={
+            <UserLayout>
+              <WebRtc />
             </UserLayout>
           }
         />

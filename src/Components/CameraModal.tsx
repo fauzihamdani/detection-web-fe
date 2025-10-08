@@ -1,17 +1,20 @@
 import { Modal } from "antd";
+import VideoPlayer from "./VideoPlayer";
 
 interface PlayerModalProps {
   modalOpen: boolean;
   handleModalClose: () => void;
-  filePath: string;
   videoTitle: string;
+  url: string;
+  uniqueId: number;
 }
 
-const PlayerModal: React.FC<PlayerModalProps> = ({
+const CameraModal: React.FC<PlayerModalProps> = ({
   modalOpen,
   handleModalClose,
-  filePath,
   videoTitle,
+  url,
+  uniqueId,
 }) => {
   return (
     <>
@@ -21,15 +24,17 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
         open={modalOpen}
         onOk={handleModalClose}
         onCancel={handleModalClose}
+        width={"100%"}
+        height={"100%"}
+        style={{ top: 10 }}
         footer={null}
       >
-        <video controls style={{ width: "100%", height: "100%" }}>
-          <source src={filePath} typeof="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div style={{ height: "80vh", backgroundColor: "red" }}>
+          <VideoPlayer url={url} uniqueId={uniqueId} />
+        </div>
       </Modal>
     </>
   );
 };
 
-export default PlayerModal;
+export default CameraModal;
