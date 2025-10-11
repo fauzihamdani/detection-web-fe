@@ -7,6 +7,7 @@ interface PlayerModalProps {
   videoTitle: string;
   url: string;
   uniqueId: number;
+  id: string;
 }
 
 const CameraModal: React.FC<PlayerModalProps> = ({
@@ -15,6 +16,7 @@ const CameraModal: React.FC<PlayerModalProps> = ({
   videoTitle,
   url,
   uniqueId,
+  id,
 }) => {
   return (
     <>
@@ -30,7 +32,7 @@ const CameraModal: React.FC<PlayerModalProps> = ({
         footer={null}
       >
         <div style={{ height: "80vh", backgroundColor: "red" }}>
-          <VideoPlayer url={url} uniqueId={uniqueId} />
+          <VideoPlayer url={url} uniqueId={uniqueId} id={id} />
         </div>
       </Modal>
     </>

@@ -4,6 +4,7 @@ import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
   ArrowUpOutlined,
+  FullscreenOutlined,
   ZoomInOutlined,
   ZoomOutOutlined,
 } from "@ant-design/icons";
@@ -13,9 +14,10 @@ import CameraModal from "./CameraModal";
 interface VideoPlayerProps {
   url: string;
   uniqueId: number;
+  id: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, uniqueId }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [loading, setLoading] = useState<Boolean>(true);
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -26,10 +28,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, uniqueId }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedIniqueId, setSelectedUniqueId] = useState<number>(0);
   const [selectedUrl, setSelectedUrl] = useState<string>("");
+  const [selectedId, setSelectedId] = useState<string>("");
 
   useEffect(() => {
     setSelectedUniqueId(uniqueId);
     setSelectedUrl(url);
+    setSelectedId(id);
   }, []);
 
   const handleModalOpen = () => {
@@ -48,7 +52,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, uniqueId }) => {
       setLoadingRecord(true);
       if (record === true) {
         await fetch(
-          "http://127.0.0.1:5002/stop-recording" /* "http://10.1.1.62:500/move" */,
+          `http://127.0.0.1:5002/stop-recording/${id}` /* "http://10.1.1.62:500/move" */,
           {
             method: "GET",
             headers: {
@@ -58,7 +62,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, uniqueId }) => {
         );
       } else {
         await fetch(
-          "http://127.0.0.1:5002/start-recording" /* "http://10.1.1.62:500/move" */,
+          ` http://127.0.0.1:5002/start-recording/${id}` /* "http://10.1.1.62:500/move" */,
           {
             method: "POST",
             headers: {
@@ -278,6 +282,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, uniqueId }) => {
                   size="small"
                 >
                   {record ? "Stop Recording" : "Record"}
+                  {/* {selectedId} */}
                 </Button>
               </div>
               {/* {modalOpen && ( */}
@@ -285,10 +290,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, uniqueId }) => {
                 <Button
                   onClick={handleModalOpen}
                   size="small"
-                  disabled={modalOpen}
-                >
-                  full
-                </Button>
+                  icon={<FullscreenOutlined />}
+                  // disabled={modalOpen}
+                ></Button>
               </div>
               {/* // )} */}
             </Flex>
@@ -302,6 +306,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url, uniqueId }) => {
         videoTitle="Test Title"
         url={selectedUrl}
         uniqueId={selectedIniqueId}
+        id={id}
       />
     </div>
   );

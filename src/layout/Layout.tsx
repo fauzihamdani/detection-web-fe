@@ -20,13 +20,15 @@ const userItemMenu = [
   {
     key: 1,
     icon: React.createElement(CameraOutlined),
-    label: <Link to={"/"}>Cameras</Link>,
+    // label: <Link to={"/"}>Cameras</Link>,
+    label: <a href="/">Cameras</a>,
     link: "/",
   },
   {
     key: 2,
     icon: React.createElement(ProfileOutlined),
-    label: <Link to={"/detections"}>Detections</Link>,
+    // label: <Link to={"/detections"}>Detections</Link>,
+    label: <a href="/detections">Detections</a>,
     link: "/detections",
   },
   {
