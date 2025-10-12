@@ -13,6 +13,7 @@ const Detections = () => {
   const location = useLocation();
   // window.location.reload();
   const [hasReloaded, setHasReloaded] = useState(false);
+  const [videoUrls, setVideoUrls] = useState<string[]>([]);
 
   // const videoUrls = [
   //   "http://127.0.0.1:5002/detections/0",
@@ -28,24 +29,40 @@ const Detections = () => {
   //   { id: "3", link_rtsp: "http://127.0.0.1:5002/detections/3" },
   // ];
 
-  const videoUrls = [
-    {
-      id: "68ccf99d5def214f410f978f",
-      link_rtsp: "http://127.0.0.1:5002/detections/68ccf99d5def214f410f978f",
-    },
-    {
-      id: "68eaa7161a0f2f3a7e997773",
-      link_rtsp: "http://127.0.0.1:5002/detections/68eaa7161a0f2f3a7e997773",
-    },
-    {
-      id: "68eaa71d1a0f2f3a7e997774",
-      link_rtsp: "http://127.0.0.1:5002/detections/68eaa71d1a0f2f3a7e997774",
-    },
-    {
-      id: "68eaa7201a0f2f3a7e997775",
-      link_rtsp: "http://127.0.0.1:5002/detections/68eaa7201a0f2f3a7e997775",
-    },
-  ];
+  // const videoUrls = [
+  //   {
+  //     id: "68ccf99d5def214f410f978f",
+  //     link_rtsp: "http://127.0.0.1:5002/detections/68ccf99d5def214f410f978f",
+  //   },
+  //   {
+  //     id: "68eaa7161a0f2f3a7e997773",
+  //     link_rtsp: "http://127.0.0.1:5002/detections/68eaa7161a0f2f3a7e997773",
+  //   },
+  //   {
+  //     id: "68eaa71d1a0f2f3a7e997774",
+  //     link_rtsp: "http://127.0.0.1:5002/detections/68eaa71d1a0f2f3a7e997774",
+  //   },
+  //   {
+  //     id: "68eaa7201a0f2f3a7e997775",
+  //     link_rtsp: "http://127.0.0.1:5002/detections/68eaa7201a0f2f3a7e997775",
+  //   },
+  // ];
+  const getCamsid = async () => {
+    const getCams = await fetch(`http://localhost:3005/api/cameras`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const camsData = await getCams.json();
+    const ids = camsData.data.map((camera: { [k: string]: any }) => camera._id);
+    setVideoUrls(ids);
+    console.log("getCams => ", camsData);
+  };
+
+  useEffect(() => {
+    getCamsid();
+  }, []);
 
   useEffect(() => {
     setReloadVideo(false);
@@ -73,9 +90,20 @@ const Detections = () => {
           {videoUrls.map((url, index) => (
             <Col span={12} style={{ marginBottom: "2vh" }} key={index}>
               {reloadVideo && (
-                <VideoPlayer url={url.link_rtsp} uniqueId={index} id={url.id} />
+                <>
+                  <VideoPlayer
+                    url={`http://127.0.0.1:5002/detections/${url}`}
+                    id={url}
+                    uniqueId={index}
+                  />
+                </>
               )}
             </Col>
+            // <Col span={12} style={{ marginBottom: "2vh" }} key={index}>
+            //   {reloadVideo && (
+            //     <VideoPlayer url={url.link_rtsp} uniqueId={index} id={url.id} />
+            //   )}
+            // </Col>
           ))}
           {/* <Col span={12} style={{ marginBottom: "2vh" }}>
             {reloadVideo && (
