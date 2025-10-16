@@ -8,6 +8,7 @@ interface PlayerModalProps {
   url: string;
   uniqueId: number;
   id: string;
+  name: string;
 }
 
 const CameraModal: React.FC<PlayerModalProps> = ({
@@ -17,11 +18,11 @@ const CameraModal: React.FC<PlayerModalProps> = ({
   url,
   uniqueId,
   id,
+  name,
 }) => {
   return (
     <>
       <Modal
-        title={videoTitle}
         closable={{ "aria-label": "Custom Close Button" }}
         open={modalOpen}
         onOk={handleModalClose}
@@ -31,8 +32,8 @@ const CameraModal: React.FC<PlayerModalProps> = ({
         style={{ top: 10 }}
         footer={null}
       >
-        <div style={{ height: "80vh", backgroundColor: "red" }}>
-          <VideoPlayer url={url} uniqueId={uniqueId} id={id} />
+        <div>
+          <VideoPlayer url={url} uniqueId={uniqueId} id={id} name={name} />
         </div>
       </Modal>
     </>

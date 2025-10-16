@@ -15,9 +15,15 @@ interface VideoPlayerProps {
   url: string;
   uniqueId: number;
   id: string;
+  name: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({
+  id,
+  url,
+  uniqueId,
+  name,
+}) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [loading, setLoading] = useState<Boolean>(true);
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -61,8 +67,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
           }
         );
       } else {
+        alert("start recording");
         await fetch(
-          ` http://127.0.0.1:5002/start-recording/${id}` /* "http://10.1.1.62:500/move" */,
+          `http://127.0.0.1:5002/start-recording/${id}` /* "http://10.1.1.62:500/move" */,
           {
             method: "POST",
             headers: {
@@ -88,7 +95,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
       setLoadingPan(true);
       console.log("valPan => ", valPan);
       const res = await fetch(
-        "http://127.0.0.1:5002/move",
+        `http://127.0.0.1:5002/move-ptz/${id}`,
         // "http://10.1.1.62:5001/move",
         {
           method: "POST",
@@ -143,11 +150,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
           <h1>loading..</h1>
         </div>
       )}
+
       <div
         style={{ position: "relative", zIndex: "1", height: "100%" }}
         onMouseOver={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
+        {/*   {JSON.stringify(loading)} */}
+        <h3 /* style={{ backgroundColor: loading ? "red" : "green" }} */>
+          {name}
+        </h3>
         <img
           ref={imgRef}
           alt="Video stream"
@@ -168,14 +180,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
             display: isOpen ? "" : "none",
             position: "absolute", // Absolute positioning relative to parent
             right: "0", // Start from the left of the container
-            top: "0",
+            top: "20px",
             width: "20%", // Make the text div span the full width of the image
             backgroundColor: "rgba(67, 63, 65, 0.5)", // Semi-transparent red background
             color: "white", // Text color
             padding: "5px", // Padding around the text
             textAlign: "center", // Center the text
             zIndex: 2, // Text will appear on top of the image
-            height: "25%",
+            height: "27%",
           }}
         >
           <Flex align="center" justify="space-evenly">
@@ -247,7 +259,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
             position: "absolute", // Absolute positioning relative to parent
             // top: "0", // Place the text at the top of the image container
             left: "0", // Start from the left of the container
-            bottom: "0",
+            bottom: "-20px",
             width: "100%", // Make the text div span the full width of the image
             backgroundColor: "rgba(67, 63, 65, 0.5)", // Semi-transparent red background
             color: "white", // Text color
@@ -307,6 +319,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ id, url, uniqueId }) => {
         url={selectedUrl}
         uniqueId={selectedIniqueId}
         id={id}
+        name={name}
       />
     </div>
   );
