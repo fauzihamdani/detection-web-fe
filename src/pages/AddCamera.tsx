@@ -1,20 +1,33 @@
 import { Button, Flex, Form, Input, Table, type FormProps } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import instance from "../library/axios";
+import CameraEditModal from "../Components/CameraEditModal";
+import CameraDeleteModal from "../Components/CameraDeleteModal";
 
-type CameraProps = {
+interface CameraProps {
   rtsp_url: string;
-  ipOnvif?: string;
-  username?: string;
-  name?: string;
-  password?: string;
-  port?: number;
-};
+  ipOnvif?: string | null;
+  username?: string | null;
+  name: string;
+  password?: string | null;
+  port?: number | null;
+}
 
 const AddCamera = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingGet, setLoadingGet] = useState<boolean>(false);
   const [cameras, setCameras] = useState<{ [k: string]: any }[]>([]);
+  const [selectedId, setSelectedId] = useState<string>();
+  const [modalOpenEdit, setModalOpenEdit] = useState<boolean>(false);
+  const [modalOpenDelete, setModalOpenDelete] = useState<boolean>(false);
+  const [selectedCamera, setSelectedCamera] = useState<CameraProps>({
+    rtsp_url: "",
+    name: "",
+    ipOnvif: null,
+    username: null,
+    password: null,
+    port: null,
+  });
 
   const columns = [
     {
@@ -27,7 +40,70 @@ const AddCamera = () => {
       dataIndex: "rtsp_url",
       key: "rtsp_url",
     },
+    {
+      title: "Ip Onvif",
+      dataIndex: "ipOnvif",
+      key: "ipOnvif",
+      render: (value: string | null | undefined) =>
+        value ? value : <span> - </span>,
+    },
+    {
+      title: "Username",
+      dataIndex: "username",
+      key: "username",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_: any, record: any) => (
+        <Flex>
+          <Button
+            type="link"
+            onClick={() => handleOpenEdit(record._id, record)}
+          >
+            Edit
+          </Button>
+
+          <Button
+            danger
+            type="link"
+            onClick={() => handleOpenDelete(record._id)}
+          >
+            Delete
+          </Button>
+        </Flex>
+      ),
+    },
   ];
+
+  const handleOpenEdit = (id: string, camera: CameraProps) => {
+    setSelectedCamera(() => ({
+      name: camera.name,
+      rtsp_url: camera.rtsp_url,
+      ipOnvif: camera.ipOnvif,
+      username: camera.username,
+      password: camera.password,
+      port: camera.port,
+    }));
+    setModalOpenEdit(true);
+    setSelectedId(id);
+  };
+
+  const handleOpenDelete = (id: string) => {
+    setModalOpenDelete(true);
+    setSelectedId(id);
+  };
+
+  const handleCloseEdit = () => {
+    setModalOpenEdit(false);
+    console.log("modal closed");
+  };
+
+  const handleCloseDelete = () => {
+    setModalOpenDelete(false);
+    console.log("modal closed");
+  };
+
   const getCameras = async () => {
     try {
       setLoadingGet(true);
@@ -39,8 +115,13 @@ const AddCamera = () => {
       });
       const camerasData = await getCameras.json();
 
-      setCameras([...camerasData]);
-    } catch (error) {}
+      setCameras(camerasData.data);
+      setLoadingGet(false);
+    } catch (error) {
+      console.log("error => ", error);
+    } finally {
+      setLoadingGet(false);
+    }
   };
 
   const onFinish: FormProps<CameraProps>["onFinish"] = async (values) => {
@@ -56,18 +137,13 @@ const AddCamera = () => {
       );
       const response = await instance.post("/camera", filteredValues);
 
-      const responsePython = await instance.post(
-        "http://127.0.0.1:5002/add-camera",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(response),
-        }
-      );
-      console.log(responsePython);
-      console.log(response);
+      await instance.post("http://127.0.0.1:5002/add-camera", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(response),
+      });
     } catch (error) {
       console.log("error =>", error);
     } finally {
@@ -80,6 +156,10 @@ const AddCamera = () => {
   ) => {
     console.log("Success:", errorInfo);
   };
+
+  useEffect(() => {
+    getCameras();
+  }, []);
 
   return (
     <>
@@ -129,8 +209,19 @@ const AddCamera = () => {
           </Form.Item>
         </Flex>
       </Form>
-
-      <Table columns={columns} />
+      <Table columns={columns} dataSource={cameras} loading={loadingGet} />
+      <CameraEditModal
+        id={selectedId as string}
+        modalOpen={modalOpenEdit}
+        handleModalClose={handleCloseEdit}
+        selectedCamera={selectedCamera}
+        getCamera={getCameras}
+      />
+      <CameraDeleteModal
+        id={selectedId as string}
+        modalOpen={modalOpenDelete}
+        handleModalClose={handleCloseDelete}
+      />
     </>
   );
 };
